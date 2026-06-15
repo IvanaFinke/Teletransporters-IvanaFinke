@@ -8,6 +8,9 @@ class Cliente(val tarjeta: Tarjeta, val nombre : String, val edad : Int, var bil
     fun saldoDeudor() = if(tarjeta.saldo < 0) -tarjeta.saldo else 0.0
     fun fechaAdquTarjeta() = tarjeta.fechaAdquisicion
     fun comprarViaje(monto : Double){ billetera-= monto }
+    fun agregarViaje(viaje : Viaje) {
+        viajes.add(viaje)
+    }
 }
 
 class Tarjeta(var saldo : Double = 0.0, val fechaAdquisicion : LocalDate){
