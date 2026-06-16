@@ -1,7 +1,7 @@
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-abstract class Viaje(val topeDeuda : Double, val fechaViaje : LocalDateTime, var condiciones : CondicionesViaje, var partida : Lugar, var destino : Lugar) {
+abstract class Viaje(val topeDeuda : Double, var fechaViaje : LocalDateTime, var condiciones : CondicionesViaje, var partida : Lugar, var destino : Lugar) {
     open var listaPersonas : MutableList<Cliente> = mutableListOf()
     val costoBase : Double = 5.0
     var listaObservers : MutableList<InformacionFinal> = mutableListOf()
@@ -32,7 +32,7 @@ abstract class Viaje(val topeDeuda : Double, val fechaViaje : LocalDateTime, var
 }
 
 //Sub-tipos de Viajes
-class ViajeProgramado(val topePersonas : Int, listaPersonas: MutableList<Cliente>, topeDeuda : Double, fechaViaje : LocalDateTime, condiciones : CondicionesViaje, partida : Lugar, destino : Lugar): Viaje( topeDeuda, fechaViaje, condiciones, partida, destino){
+class ViajeProgramado(val topePersonas : Int, topeDeuda : Double, fechaViaje : LocalDateTime, condiciones : CondicionesViaje, partida : Lugar, destino : Lugar): Viaje( topeDeuda, fechaViaje, condiciones, partida, destino){
     override fun tramos() = listOf(Tramo(partida,destino))
 
     override fun validaciones(cliente : Cliente){
@@ -42,7 +42,7 @@ class ViajeProgramado(val topePersonas : Int, listaPersonas: MutableList<Cliente
         validacionSaldo(cliente) //valida que el cliente tenga saldo mayor al tope del viaje
     }
 
-    fun validacionTopePersona(){if(listaPersonas.size > topePersonas)
+    fun validacionTopePersona(){if(listaPersonas.size >= topePersonas)
         throw ExcepcionLimiteIngreso("Ya no se permite el ingreso de más personas")}
 
     fun validacionHoraIngreso(horaIngreso : LocalDateTime){if(horaIngreso.isBefore(fechaViaje.minusHours(2)))

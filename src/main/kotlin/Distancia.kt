@@ -14,7 +14,7 @@ class ServicioDistanciaAdapter(var servicioDistancia: ServicioCalculaDistancia) 
             destino.direccion.x,
             destino.direccion.y,
             18)
-        val distanciaMillas = parteEntera + parteDecimal / 10.0
+        val distanciaMillas = parteEntera + parteDecimal / 100.0
         return distanciaMillas * 1.609344
     }
     fun calcularDistanciaTotalTramos(tramos : List<Tramo>) : Double =

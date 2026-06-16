@@ -20,8 +20,9 @@ class CondicionesViajeSpec : DescribeSpec({
     val rosedal = Lugar("Rosedal",direccion= Direccion(x= 30.0f, y = 105.0f))
 
     //Viajes
-    val viaje1 = ViajeProgramado(topePersonas = 3, listaPersonas = mutableListOf(clienteJoven,clienteMayor), fechaViaje = LocalDateTime.of(2016, 2, 29, 7, 0, 0),
+    val viaje1 = ViajeProgramado(topePersonas = 3, fechaViaje = LocalDateTime.of(2016, 2, 29, 7, 0, 0),
        condiciones = condicionPorEdad, partida = miserere, destino = rosedal, topeDeuda = 105.0)
+    viaje1.listaPersonas = mutableListOf(clienteJoven,clienteMayor)
 
     describe("Un Cliente de 15 años viaja"){
         it("El cliente joven viaja con condicion por edad"){
@@ -43,5 +44,6 @@ class CondicionesViajeSpec : DescribeSpec({
             viaje1.reasignarCondicion(HoraEdad)
             viaje1.costo(clienteJoven) shouldBe (4.9 plusOrMinus 0.89999 )
         }
+
     }
 })

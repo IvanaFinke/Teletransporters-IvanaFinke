@@ -19,7 +19,7 @@ class InformarDeuda(val mailSender : ServicioMail) : InformacionFinal{
         if(cliente.saldoDeudor() > deudaMaxima.valor){
             mailSender.enviarMail(Mail(
                 emisor = "agenciaviajes@gmail.com",
-                receptor = cliente.nombre,
+                receptor = cliente.mailCliente,
                 titulo = "Aviso de deuda",
                 contenido = "Se le informa al cliente ${cliente.nombre} que no posee saldo para poder realizar otro viaje. Su saldo es ${cliente.saldoDeudor()}"
             ))
