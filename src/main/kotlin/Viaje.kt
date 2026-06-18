@@ -51,9 +51,10 @@ class ViajeProgramado(val topePersonas : Int, topeDeuda : Double, fechaViaje : L
     fun validacionSaldo(cliente : Cliente){if(cliente.saldoDeudor() > topeDeuda)
             throw ExcepcionLimiteDeuda("Limite deuda excedido para este viaje")}
 }
-
+//localidades a usar en los viajes
 data class Lugar(val nombre : String, val direccion: Direccion)
 
+//conjunto de dos localidades, que se llamaran tramo
 data class Tramo(val partida: Lugar, val destino : Lugar)
 
 class Itinerario(val tramos : MutableList<Tramo>, topeDeuda: Double, fechaViaje : LocalDateTime, condiciones : CondicionesViaje, partida : Lugar, destino : Lugar): Viaje(topeDeuda, fechaViaje, condiciones, partida, destino){

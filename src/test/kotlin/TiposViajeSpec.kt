@@ -250,6 +250,13 @@ class TiposViajeSpec : DescribeSpec({
                     itinerario1.fechaViaje.monthValue
                 ) shouldBe kmEsperados
 
+                //verificamos que se haya llamado para la cantidad de tramos (3)
+                verify(exactly = 3) {
+                    servicioCalcular.calcularDistancia(
+                        any(), any(), any(), any(), any()
+                    )
+                }
+
             }
 
     }
