@@ -11,9 +11,9 @@ class CondicionesViajeSpec : DescribeSpec({
     val tarjeta1 = Tarjeta(saldo = 20.0, fechaAdquisicion = LocalDate.of(2011,2,21))
 
     //Clientes
-    val clienteJoven = Cliente(tarjeta1, "Edmond",15, billetera = 100.2)
-    val clienteAdulto = Cliente(tarjeta1, "Oberon",40, billetera = 200.2)
-    val clienteMayor = Cliente(tarjeta1, "Don Quixote",67, billetera = 200.2)
+    val clienteJoven = Cliente(tarjeta1, "Edmond",15)
+    val clienteAdulto = Cliente(tarjeta1, "Oberon",40)
+    val clienteMayor = Cliente(tarjeta1, "Don Quixote",67)
 
     //Lugares
     val miserere = Lugar("Plaza Miserere",direccion= Direccion(x= 20.0f, y = 15.0f))

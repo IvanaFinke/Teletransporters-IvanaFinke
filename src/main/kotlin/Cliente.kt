@@ -1,6 +1,6 @@
 import java.time.LocalDate
 
-class Cliente(val tarjeta: Tarjeta, val nombre : String, val edad : Int, var billetera : Double) {
+class Cliente(val tarjeta: Tarjeta, val nombre : String, val edad : Int) {
     val mailCliente : String = "${nombre}@gmail.com"
     var viajes : MutableList<Viaje> = mutableListOf()
     fun cargarTarjeta(monto : Double){

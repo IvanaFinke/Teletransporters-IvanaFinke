@@ -21,9 +21,9 @@ class TiposViajeSpec : DescribeSpec({
     val tarjeta4 = Tarjeta(saldo = 20.0, fechaAdquisicion = LocalDate.of(2011, 2, 21))
 
     //Clientes
-    val clienteJoven = Cliente(tarjeta1, "Edmond", 15, billetera = 100.2)
-    val clienteAdulto = Cliente(tarjeta2, "Oberon", 40, billetera = 200.2)
-    val clienteMayor = Cliente(tarjeta3, "Don Quixote", 67, billetera = 200.2)
+    val clienteJoven = Cliente(tarjeta1, "Edmond", 15)
+    val clienteAdulto = Cliente(tarjeta2, "Oberon", 40)
+    val clienteMayor = Cliente(tarjeta3, "Don Quixote", 67)
 
     //Lugares
     val miserere = Lugar("Plaza Miserere", direccion = Direccion(x = 20.0f, y = 15.0f))
@@ -102,7 +102,7 @@ class TiposViajeSpec : DescribeSpec({
 
         describe("Validacion de tope de gente para el viaje") {
             it("No se puede ingresar a mas gente cuando el tope de viaje se cumplio") {
-                val clienteAdulto2 = Cliente(tarjeta4, "Don Quixote", 50, billetera = 200.2)
+                val clienteAdulto2 = Cliente(tarjeta4, "Don Quixote", 50)
                 viajeProgramado.ingresarPersonas(clienteAdulto2) //llega al tope
                 viajeProgramado.listaPersonas.size shouldBe 3
                 shouldThrow<ExcepcionLimiteIngreso> { viajeProgramado.ingresarPersonas(clienteAdulto) }
@@ -114,19 +114,20 @@ class TiposViajeSpec : DescribeSpec({
         }
         describe("Validacion de saldo deudor de una persona") {
             it("Una persona puede viajar mientras no supere el tope de saldo deudor") {
-                val tarjeta5 = Tarjeta(saldo = 3.0, fechaAdquisicion = LocalDate.of(2016, 2, 29))
-                val clienteConDeudaBien = Cliente(tarjeta5, "Agnes", 25, billetera = 20.0)
+                viajeProgramado.topeDeuda = 100.0
+                val tarjeta5 = Tarjeta(saldo = -90.0, fechaAdquisicion = LocalDate.of(2016, 2, 29))
+                val clienteConDeudaBien = Cliente(tarjeta5, "Agnes", 25)
                 viajeProgramado.ingresarPersonas(clienteConDeudaBien) // hace un viaje
                 viajeProgramado.completarViaje()
-                clienteConDeudaBien.saldoDeudor() shouldBe 2.0
+                clienteConDeudaBien.saldoDeudor() shouldBe 95.0
                 shouldNotThrow<ExcepcionLimiteDeuda> { viajeProgramado2.ingresarPersonas(clienteConDeudaBien) }
             }
             it("Una persona NO puede viajar si supera el tope de saldo deudor") {
                 val tarjeta5 = Tarjeta(saldo = -105.0, fechaAdquisicion = LocalDate.of(2016, 2, 29))
-                val clienteConDeuda = Cliente(tarjeta5, "Agnes", 25, billetera = 98.0)
+                val clienteConDeuda = Cliente(tarjeta5, "Agnes", 25)
                 viajeProgramado.ingresarPersonas(clienteConDeuda)
                 viajeProgramado.completarViaje() // hace un viaje
-                clienteConDeuda.saldoDeudor() shouldBe 110.0 //supera el maximo de saldoDeudor permitido por el viaje, 105.0
+                clienteConDeuda.saldoDeudor() shouldBe 110.0 //supera el maximo de saldoDeudor permitido por el viaje = 105.0
                 shouldThrow<ExcepcionLimiteDeuda> { viajeProgramado2.ingresarPersonas(clienteConDeuda) }
             }
         }

@@ -1,6 +1,5 @@
 
-data class Direccion(var x : Float, var y : Float) {
-}
+data class Direccion(var x : Float, var y : Float) {}
 
 interface ServicioCalculaDistancia{
     fun calcularDistancia(x1 : Float, y1 : Float, x2 : Float, y2 : Float, distDirecta : Int) : Pair<Int, Int>

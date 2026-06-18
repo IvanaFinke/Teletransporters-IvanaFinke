@@ -16,7 +16,7 @@ object deudaMaxima{
 
 class InformarDeuda(val mailSender : ServicioMail) : InformacionFinal{
     override fun informar(cliente : Cliente, viaje : Viaje) {
-        if(cliente.saldoDeudor() > deudaMaxima.valor){
+        if(cliente.saldoDeudor() > deudaMaxima.valor){ //chequeamos el valor del objeto global para deuda maxima
             mailSender.enviarMail(Mail(
                 emisor = "agenciaviajes@gmail.com",
                 receptor = cliente.mailCliente,
