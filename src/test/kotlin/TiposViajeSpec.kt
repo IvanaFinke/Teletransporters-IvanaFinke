@@ -36,10 +36,10 @@ class TiposViajeSpec : DescribeSpec({
     val chilavert = Lugar("Chilavert", direccion = Direccion(x = 17.0f, y = 780.0f))
 
     //Tramos
-    val tramoMiserereRosedal = Tramo(miserere, rosedal)
-    val corrientesYMaipu = Tramo(corrientes, maipu)
-    val avSanMartinCarlosLopez = Tramo(avSanMartin, carlosLopez)
-    val joseLSuarezChilaver = Tramo(joselsuarez, chilavert)
+    val tramoMiserereRosedal = Tramo(miserere, rosedal) //dist 90.55
+    val corrientesYMaipu = Tramo(corrientes, maipu)     // dist 22.36
+    val avSanMartinCarlosLopez = Tramo(avSanMartin, carlosLopez) // dist 141.42
+    val joseLSuarezChilaver = Tramo(joselsuarez, chilavert) // dist 545.99
 
     //Viajes
     val viajeProgramado = ViajeProgramado(
@@ -228,6 +228,30 @@ class TiposViajeSpec : DescribeSpec({
                 )
             }
         }
+            it("Al completar un Itinerario se generan los totales de distancia por usuario x mes") {
+                itinerario1.ingresarPersonas(clienteJoven)
+
+                every {
+                    servicioCalcular.calcularDistancia(
+                        any(), any(), any(), any(), any()
+                    )
+                } returnsMany listOf(
+                    Pair(90,55),
+                    Pair(22,36),
+                    Pair(141,42)
+                )
+
+                itinerario1.completarViaje()
+
+                val kmEsperados = (90.55 + 22.36 + 141.42) * 1.609344
+
+                servicioInformarDistanciaTotal.distanciaClienteEnMes(
+                    clienteJoven,
+                    itinerario1.fechaViaje.monthValue
+                ) shouldBe kmEsperados
+
+            }
+
     }
 
 
